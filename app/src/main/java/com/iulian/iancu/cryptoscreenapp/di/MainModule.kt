@@ -19,7 +19,6 @@ class MainModule {
     fun provideGetUserWalletUseCase(): GetUserWalletUseCase = GetUserWalletUseCase()
 
     @Provides
-    @Singleton
     fun provideGetCurrencyRateUseCase(repository: CurrencyRepository): GetCurrencyRateUseCase =
         GetCurrencyRateUseCase(repository)
 
