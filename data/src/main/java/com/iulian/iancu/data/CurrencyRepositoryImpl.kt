@@ -34,12 +34,12 @@ class CurrencyRepositoryImpl(private val exchangeRateService: ExchangeRateServic
             if (result.isSuccessful) {
                 val rate = result.body()?.ethereum?.eur
                 if (rate != null) {
-                    givenList.add(ExchangeRate.USD(rate))
+                    givenList.add(ExchangeRate.EUR(rate))
                     EUR_rate = rate
                 } else return Either.fail(UnknownError("Response says success but no EUR?"))
             } else return Either.fail(ServiceConfigurationError(result.errorBody()?.string()))
         } else givenList.add(
-            ExchangeRate.USD(EUR_rate ?: return Either.fail(UnknownError("Where did EUR go?")))
+            ExchangeRate.EUR(EUR_rate ?: return Either.fail(UnknownError("Where did EUR go?")))
         )
 
         //Check GBP rate exists in active memory, if not grab it from the server
@@ -48,12 +48,12 @@ class CurrencyRepositoryImpl(private val exchangeRateService: ExchangeRateServic
             if (result.isSuccessful) {
                 val rate = result.body()?.ethereum?.gbp
                 if (rate != null) {
-                    givenList.add(ExchangeRate.USD(rate))
+                    givenList.add(ExchangeRate.GBP(rate))
                     GBP_rate = rate
                 } else return Either.fail(UnknownError("Response says success but no GBP?"))
             } else return Either.fail(ServiceConfigurationError(result.errorBody()?.string()))
         } else givenList.add(
-            ExchangeRate.USD(GBP_rate ?: return Either.fail(UnknownError("Where did GBP go?")))
+            ExchangeRate.GBP(GBP_rate ?: return Either.fail(UnknownError("Where did GBP go?")))
         )
 
         return Either.success(givenList)
